@@ -8,7 +8,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient private constructor() {
-    lateinit var exampleService: ExampleService
+    lateinit var service: GitHubService
 
     private object Holder {
         val INSTANCE = ApiClient()
@@ -27,12 +27,12 @@ class ApiClient private constructor() {
                 .build()
 
         val retrofit = Retrofit.Builder()
-                .baseUrl("/")
+                .baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build()
 
-        exampleService = retrofit.create(ExampleService::class.java)
+        service = retrofit.create(GitHubService::class.java)
     }
 }
