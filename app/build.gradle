@@ -33,4 +33,7 @@ dependencies {
 
     implementation(["io.reactivex.rxjava2:rxandroid:$rxandroid_version",
                     "io.reactivex.rxjava2:rxjava:$rxjava_version"])
+
+    implementation(["com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycle_version",
+                    "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"])
 }
