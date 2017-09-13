@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ApiClient</string>
+    <string name="service_error">服务器出错</string>
+    <string name="not_found">请求的资源不存在</string>
+    <string name="timeout">请求超时</string>
+    <string name="unexpected_error">未知错误</string>
+    <string name="network_wrong">网络有问题</string>
 </resources>
