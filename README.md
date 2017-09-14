@@ -1,4 +1,5 @@
 # ApiClient
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 **NOTE**:本例中使用的RxJava2的类均是不支持背压的，即`Observable(被观察者)`与`Observer（观察者）`。需要背压策略，请自行替换为对应的`Flowable(被观察者)`与`Subscriber(观察者)`即可。
 
