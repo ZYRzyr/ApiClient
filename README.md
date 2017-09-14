@@ -1,7 +1,9 @@
 # ApiClient
-**提示：** 本例中使用的RxJava2的类均是不支持背压的，即`Observable(被观察者)`与`Observer（观察者）`。需要背压策略，请自行替换为对应的`Flowable(被观察者)`与`Subscriber(观察者)`即可。
+
+**NOTE**:本例中使用的RxJava2的类均是不支持背压的，即`Observable(被观察者)`与`Observer（观察者）`。需要背压策略，请自行替换为对应的`Flowable(被观察者)`与`Subscriber(观察者)`即可。
 
 ## 开始
+
 ### 1.按惯例先添加依赖:
 ```gradle
 //Retrofit相关
@@ -18,7 +20,8 @@ compile(['io.reactivex.rxjava2:rxandroid:2.0.1',
 compile(['com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.0',
          'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'])
 ```
-**提示：** 可以去[Retrofit](https://github.com/square/retrofit)、[Rxjava2(RxAndroid)](https://github.com/ReactiveX/RxAndroid)、[okhttp](https://github.com/square/okhttp)、[RxLifecycle](https://github.com/trello/RxLifecycle)，查询最新版本号。
+
+**NOTE**:可以去[Retrofit](https://github.com/square/retrofit)、[Rxjava2(RxAndroid)](https://github.com/ReactiveX/RxAndroid)、[okhttp](https://github.com/square/okhttp)、[RxLifecycle](https://github.com/trello/RxLifecycle)，查询最新版本号。
 
 ### 2.封装请求类
 为了秉承`RxJava`的链式调用风格，也为了方便每一个`API`的调用操作，创建了一个单例类`ApiClient`，具体如下：
@@ -62,10 +65,11 @@ interface GitHubService {
     fun listRepos(@Path("user") user: String): Observable<List<Repo>> //每个方法的返回值即一个Observable
 }
 ```
-上面的`Repo`即一个简单的`Kotlin`数据类，由于字较多，就不贴出来了，具体可去文末`Demo`地址查找。
+上面的`Repo`即一个简单的`Kotlin`数据类，可以去[这里](https://github.com/ZYRzyr/ApiClient/tree/master/app/src/main/java/com/zyr/apiclient/data)查看。
 
 ### 3.`RESTful API`请求响应的处理
 `API`的响应返回形式有很多种，此处介绍最常见的两种形式的处理：标准`RESTful API`与`任性的后端写的API`。`GitHub`提供的`API`即标准`RESTful API`。
+
 `RESTful API`的请求响应主要处理状态码与数据体，具体封装如下：
 ```kotlin
 abstract class ApiResponse<T>(private val context: Context) : Observer<T> {
@@ -114,7 +118,8 @@ abstract class ApiResponse<T>(private val context: Context) : Observer<T> {
             Gson().fromJson(e.response().errorBody()?.charStream(), ApiErrorModel::class.java)
 }
 ```
-**说明：** 
+**说明** :
+
 1.每个响应继承`Observer`，其中的`泛型`以适配返回的不同的数据体；
 
 2.定义两个抽象方法`success`和`failure`，在使用的时候只需关注成功和失败这两种情况；
@@ -147,6 +152,7 @@ enum class ApiErrorType(val code: Int, @param: StringRes private val messageId: 
 ```kotlin
 data class ApiErrorModel(var status: Int, var message: String)
 ```
+
 ### 4.线程与生命周期
 `RxJava`的一大特色即方便的线程切换操作，在请求`API`中需要进行线程的切换，通常是以下形式(伪代码)：
 ```kotlin
@@ -173,9 +179,11 @@ observable.compose(NetworkScheduler.compose())
           .bindUntilEvent(this, ActivityEvent.DESTROY)  //加入这句
           .subscribe(...)
 ```
+
 ### 5.使用
 在以上准备工作完成后，即可开始使用：
-**1**.首先在`Application`中初始化`ApiClient`：
+
+首先在`Application`中初始化`ApiClient`：
 ```kotlin
 class App : Application() {
     override fun onCreate() {
@@ -184,7 +192,8 @@ class App : Application() {
     }
 }
 ```
-在需要的地方使用`ApiClient`，如本文Demo，点击按钮时，请求数据，成功后用`TextView`显示出来:
+
+在需要的地方使用`ApiClient`，如Demo中，点击按钮时，请求数据，成功后用`TextView`显示出来:
 ```kotlin
 class MainActivity : RxAppCompatActivity() {
 
@@ -214,8 +223,11 @@ class MainActivity : RxAppCompatActivity() {
     }
 }
 ```
+
 效果如下：
+
 ![效果.gif](http://upload-images.jianshu.io/upload_images/4839535-aff440c06e964294.gif?imageMogr2/auto-orient/strip)
+
 ### 6.`任性的后端写的API`请求响应的处理
 这种情况只需要对数据类和响应处理进行修改即可。有些后端开发者们，可能将返回体写成如下形式:
 ```json
@@ -289,6 +301,7 @@ abstract class RequestCallback<T>(private val context: Context) : Observer<Respo
     }
 }
 ```
+
 修改完成之后的使用与上文第5点相同。
 
 原文链接:http://www.jianshu.com/p/c66d50cd14ee
