@@ -194,7 +194,7 @@ class App : Application() {
 }
 ```
 
-在需要的地方使用`ApiClient`，如Demo中，点击按钮时，请求数据，成功后用`TextView`显示出来:
+在需要的地方使用`ApiClient`，点击按钮时，请求数据，成功后用`TextView`显示出来:
 ```kotlin
 class MainActivity : RxAppCompatActivity() {
 
