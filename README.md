@@ -15,7 +15,7 @@ compile(['com.squareup.okhttp3:logging-interceptor:3.9.0',//用于查看http请�
 
 //RxJava相关
 compile(['io.reactivex.rxjava2:rxandroid:2.0.1',
-         'io.reactivex.rxjava2:rxjava:$rxjava_version:2.1.3'])
+         'io.reactivex.rxjava2:rxjava:2.1.3'])
 
 //RxLifecycle相关
 compile(['com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.0',
