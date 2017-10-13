@@ -17,10 +17,16 @@ package com.zyr.apiclient.network
 
 import com.zyr.apiclient.data.Repo
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface GitHubService {
     @GET("users/{user}/repos")
     fun listRepos(@Path("user") user: String): Observable<List<Repo>>
+
+    @Multipart
+    @POST("xxxx/xxxx") //This is imaginary URL
+    fun updateImage(@Part("name") name: RequestBody,
+                    @Part image: MultipartBody.Part)
 }
