@@ -307,7 +307,7 @@ abstract class RequestCallback<T>(private val context: Context) : Observer<Respo
 
 **2017年10月13日更新—增加上传图片的方法**
 新增`OkHttpUtil.kt`，用于上传图片，代码如下：
-```java
+```kotlin
 object OkHttpUtil {
     fun createTextRequestBody(source: String): RequestBody
             = RequestBody.create(MediaType.parse("text/plain"), source)
@@ -319,14 +319,14 @@ object OkHttpUtil {
 ```
 使用方式:
 1.先在`GitHubService.kt`中新增如下方法：
-```java
+```kotlin
 @Multipart
 @POST("xxxx/xxxx") //This is imaginary URL
 fun updateImage(@Part("name") name: RequestBody,
                 @Part image: MultipartBody.Part): Observable<UserInfo>
 ```
 2.在需要的地方使用:
-```java
+```kotlin
 ApiClient.instance.service.updateImage(OkHttpUtil.createTextRequestBody("Bob"),
                  OkHttpUtil.createPartWithAllImageFormats("avatar",file))   //此处调用OkHttpUtil中的方法
                 .compose(NetworkScheduler.compose())
@@ -342,7 +342,7 @@ ApiClient.instance.service.updateImage(OkHttpUtil.createTextRequestBody("Bob"),
                 })
 ```
 
-原文链接:http://www.jianshu.com/p/c66d50cd14ee
+原文链接:http://www.jianshu.com/p/c66d50cd14ee (欢迎点赞，收藏，关注作者)
 
 ### *License*
 
