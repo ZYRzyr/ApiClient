@@ -28,5 +28,5 @@ interface GitHubService {
     @Multipart
     @POST("xxxx/xxxx") //This is imaginary URL
     fun updateImage(@Part("name") name: RequestBody,
-                    @Part image: MultipartBody.Part)
+                    @Part image: MultipartBody.Part): Observable<String>
 }
