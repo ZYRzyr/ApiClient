@@ -305,6 +305,43 @@ abstract class RequestCallback<T>(private val context: Context) : Observer<Respo
 
 修改完成之后的使用与上文第5点相同。
 
+**2017年10月13日更新—增加上传图片的方法**
+新增`OkHttpUtil.kt`，用于上传图片，代码如下：
+```java
+object OkHttpUtil {
+    fun createTextRequestBody(source: String): RequestBody
+            = RequestBody.create(MediaType.parse("text/plain"), source)
+
+    fun createPartWithAllImageFormats(requestKey: String, file: File): MultipartBody.Part
+            = MultipartBody.Part
+            .createFormData(requestKey, file.name, RequestBody.create(MediaType.parse("image/*"), file))
+}
+```
+使用方式:
+1.先在`GitHubService.kt`中新增如下方法：
+```java
+@Multipart
+@POST("xxxx/xxxx") //This is imaginary URL
+fun updateImage(@Part("name") name: RequestBody,
+                @Part image: MultipartBody.Part): Observable<UserInfo>
+```
+2.在需要的地方使用:
+```java
+ApiClient.instance.service.updateImage(OkHttpUtil.createTextRequestBody("Bob"),
+                 OkHttpUtil.createPartWithAllImageFormats("avatar",file))   //此处调用OkHttpUtil中的方法
+                .compose(NetworkScheduler.compose())
+                .bindUntilEvent(this,ActivityEvent.DESTROY)
+                .subscribe(object : ApiResponse<UserInfo>(this) {
+                    override fun success(data: UserInfo) {
+                        //Do something
+                    }
+
+                    override fun failure(statusCode: Int, apiErrorModel: ApiErrorModel) {
+                        //Do something
+                    }
+                })
+```
+
 原文链接:http://www.jianshu.com/p/c66d50cd14ee
 
 ### *License*
