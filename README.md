@@ -306,6 +306,7 @@ abstract class RequestCallback<T>(private val context: Context) : Observer<Respo
 修改完成之后的使用与上文第5点相同。
 
 **2017年10月13日更新—增加上传图片的方法**
+
 新增`OkHttpUtil.kt`，用于上传图片，代码如下：
 ```kotlin
 object OkHttpUtil {
