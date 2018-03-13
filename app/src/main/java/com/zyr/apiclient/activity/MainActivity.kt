@@ -37,6 +37,20 @@ class MainActivity : RxAppCompatActivity() {
     }
 
     private fun fetchRepo() {
+//        使用RequestCallback
+//        ApiClient.instance.service.repos(inputUser.text.toString())
+//                .compose(NetworkScheduler.compose())
+//                .bindUntilEvent(this,ActivityEvent.DESTROY)
+//                .subscribe(object : RequestCallback<List<Repo>>(this) {
+//                    override fun success(data: List<Repo>) {
+//
+//                    }
+//
+//                    override fun failure(statusCode: Int, apiErrorModel: ApiErrorModel) {
+//
+//                    }
+//                })
+
         ApiClient.instance.service.listRepos(inputUser.text.toString())
                 .compose(NetworkScheduler.compose())
                 .bindUntilEvent(this, ActivityEvent.DESTROY)
