@@ -303,7 +303,14 @@ abstract class RequestCallback<T>(private val context: Context) : Observer<Respo
 }
 ```
 
-修改完成之后的使用与上文第5点相同。
+使用方式:
+
+1.先在`GitHubService.kt`中新增如下方法：
+```kotlin
+@GET("xxx/xxx")
+fun repos(@Path("user") user: String): Observable<ResponseWrapper<List<Repo>>>
+```
+2.之后与上文第5点相同。
 
 **2017年10月13日更新—增加上传图片的方法**
 
@@ -319,6 +326,7 @@ object OkHttpUtil {
 }
 ```
 使用方式:
+
 1.先在`GitHubService.kt`中新增如下方法：
 ```kotlin
 @Multipart
