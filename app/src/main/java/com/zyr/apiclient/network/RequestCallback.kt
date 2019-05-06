@@ -25,15 +25,23 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 abstract class RequestCallback<T>(private val context: Context) : Observer<ResponseWrapper<T>> {
+    private var isShowLoading: Boolean = true
+
+    constructor(context: Context, isShowLoading: Boolean) : this(context) {
+        this.isShowLoading = isShowLoading
+    }
+
     abstract fun success(data: T)
     abstract fun failure(statusCode: Int, apiErrorModel: ApiErrorModel)
 
     private object Status {
-        val SUCCESS = 200
+        const val SUCCESS = 200
     }
 
     override fun onSubscribe(d: Disposable) {
-        LoadingDialog.show(context)
+        if (isShowLoading) {
+            LoadingDialog.show(context)
+        }
     }
 
     override fun onNext(t: ResponseWrapper<T>) {
@@ -60,6 +68,7 @@ abstract class RequestCallback<T>(private val context: Context) : Observer<Respo
 
     override fun onError(e: Throwable) {
         LoadingDialog.cancel()
+        println(e)
         val apiErrorType: ApiErrorType = when (e) {
             is UnknownHostException -> ApiErrorType.NETWORK_NOT_CONNECT
             is ConnectException -> ApiErrorType.NETWORK_NOT_CONNECT

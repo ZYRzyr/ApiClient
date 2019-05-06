@@ -26,11 +26,19 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 abstract class ApiResponse<T>(private val context: Context) : Observer<T> {
+    private var isShowLoading: Boolean = true
+
+    constructor(context: Context, isShowLoading: Boolean) : this(context) {
+        this.isShowLoading = isShowLoading
+    }
+
     abstract fun success(data: T)
     abstract fun failure(statusCode: Int, apiErrorModel: ApiErrorModel)
 
     override fun onSubscribe(d: Disposable) {
-        LoadingDialog.show(context)
+        if (isShowLoading) {
+            LoadingDialog.show(context)
+        }
     }
 
     override fun onNext(t: T) {

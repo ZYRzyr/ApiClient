@@ -44,7 +44,7 @@ class MainActivity : RxAppCompatActivity() {
 //                .subscribe(object : RequestCallback<List<Repo>>(this) {
 //                    override fun success(data: List<Repo>) {
 //
-//                    }
+//             cd        }
 //
 //                    override fun failure(statusCode: Int, apiErrorModel: ApiErrorModel) {
 //
@@ -55,6 +55,7 @@ class MainActivity : RxAppCompatActivity() {
                 .compose(NetworkScheduler.compose())
                 .bindUntilEvent(this, ActivityEvent.DESTROY)
                 .subscribe(object : ApiResponse<List<Repo>>(this) {
+                    //              .subscribe(object : ApiResponse<List<Repo>>(this,false) {  不需要loading使用2参数构造函数
                     override fun success(data: List<Repo>) {
                         userName.text = data[0].owner.login
                         repoName.text = data[0].name
